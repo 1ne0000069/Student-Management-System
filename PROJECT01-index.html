@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professional Student Management System</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LANDING PAGE -->
+<div id="landingPage" class="landing">
+    <h1>Welcome to Student Management System</h1>
+    <p>Manage your students efficiently.</p>
+    <button onclick="goToLogin()">Start</button>
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="loginBox" class="login-box" style="display:none;">
+    <h2>Enter Password</h2>
+    <input type="password" id="loginPass" placeholder="Password">
+    <button id="loginBtn">Login</button> <!-- Added Login button -->
+</div>
+
+<!-- MAIN APP -->
+<div class="container" id="mainApp" style="display:none;">
+    <h1>Student Management System</h1>
+
+    <div class="buttons">
+        <button onclick="openAddModal()">Add Student</button>
+        <button onclick="showStudents()">Show All Students</button>
+        <button onclick="openSearchModal()">Search Student</button>
+        <button onclick="sortStudents()">Sort by CGPA</button>
+        <button onclick="saveToStorage()">Save to Browser</button>
+        <button onclick="loadFromStorage()">Load from Browser</button>
+        <button class="danger" onclick="deleteAll()">Delete All</button>
+    </div>
+
+    <div id="output"></div>
+</div>
+
+<!-- MODALS -->
+<div id="addModal" class="modal">
+    <div class="modal-content">
+        <h2>Add Student</h2>
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="text" id="id" placeholder="Enter ID">
+        <input type="number" id="cgpa" step="0.01" placeholder="Enter CGPA">
+        <div class="modal-buttons">
+            <button onclick="addStudent()">Add</button>
+            <button onclick="closeAddModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <h2>Search Student</h2>
+        <input type="text" id="searchID" placeholder="Enter Name or ID">
+        <div class="modal-buttons">
+            <button onclick="searchStudent()">Search</button>
+            <button onclick="closeSearchModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST NOTIFICATIONS -->
+<div id="toastContainer"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
