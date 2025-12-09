@@ -186,3 +186,11 @@ tr:nth-child(even) {
 
 @keyframes slidein { from { right: -300px; } to { right: 20px; } }
 @keyframes fadeout { to { opacity: 0; } }
+
+footer{
+  margin: 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;     
+  text-align: center; 
+}
