@@ -20,12 +20,18 @@ function goToLogin() {
 const loginPassInput = document.getElementById("loginPass");
 const loginBtn = document.getElementById("loginBtn");
 
+function showMainApp(){
+    document.getElementById("landingPage").style.display = "none";
+    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("mainApp").style.display = "block";
+}
+
 function handleLogin(){
     let pass = loginPassInput.value;
     if(pass === "9090"){
         showToast("Login successful!", "success");
-        document.getElementById("loginBox").style.display = "none";
-        document.getElementById("mainApp").style.display = "block";
+        sessionStorage.setItem('loggedIn','true'); // session storage set
+        showMainApp();
     } else {
         showToast("Wrong password!", "error");
     }
@@ -39,6 +45,13 @@ loginPassInput.addEventListener("keypress", function(e){
 
 // Click on Login button
 loginBtn.addEventListener("click", handleLogin);
+
+// Page reload check
+window.addEventListener('load', function(){
+    if(sessionStorage.getItem('loggedIn') === 'true'){
+        showMainApp();
+    }
+});
 
 /* MODALS */
 function openAddModal(){ document.getElementById("addModal").style.display = "flex"; }
@@ -67,7 +80,6 @@ function addStudent() {
         return;
     }
 
-    // CGPA must be > 0.00 and <= 5.00
     if (cgpa <= 0 || cgpa > 5) {
         showToast("CGPA must be greater than 0.00 and not more than 5.00", "error");
         return;
@@ -134,14 +146,13 @@ function sortStudents(){
     showToast("Students sorted by CGPA!", "success");
 }
 
-/* DELETE ALL — FIXED VERSION */
+/* DELETE ALL */
 function deleteAll(){
     if(students.length===0){ 
         showToast("No students to delete!", "info"); 
         return; 
     }
 
-    // First confirm modal
     const confirm1 = document.createElement("div");
     confirm1.className = "modal";
     confirm1.innerHTML = `
@@ -157,7 +168,6 @@ function deleteAll(){
     confirm1.querySelector("#delConfirm1").onclick = function(){
         confirm1.remove();
 
-        // Second confirm modal
         const confirm2 = document.createElement("div");
         confirm2.className = "modal";
         confirm2.innerHTML = `
@@ -173,7 +183,6 @@ function deleteAll(){
         confirm2.querySelector("#delConfirm2").onclick = function(){
             confirm2.remove();
 
-            // Password modal
             const passModal = document.createElement("div");
             passModal.className = "modal";
             passModal.innerHTML = `
@@ -200,7 +209,6 @@ function deleteAll(){
                 const val = passInput.value;
                 if(val==="0909"){
                     students=[];
-                    localStorage.removeItem("studentsData");
                     document.getElementById("output").innerHTML="";
                     showToast("All students deleted!", "success");
                 } else {
@@ -223,5 +231,3 @@ function deleteAll(){
         confirm1.remove();
     }
 }
-
-
