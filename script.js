@@ -50,25 +50,36 @@ function closeSearchModal(){ document.getElementById("searchModal").style.displa
 const nameInput = document.getElementById("name");
 const idInput = document.getElementById("id");
 const cgpaInput = document.getElementById("cgpa");
-[nameInput, idInput, cgpaInput].forEach(input=>{
-    input.addEventListener("keypress", function(e){
-        if(e.key === "Enter") addStudent();
+
+[nameInput, idInput, cgpaInput].forEach(input => {
+    input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") addStudent();
     });
 });
 
-function addStudent(){
+function addStudent() {
     let name = nameInput.value.trim();
     let id = idInput.value.trim();
     let cgpa = parseFloat(cgpaInput.value);
-    if(!name || !id || !cgpa){
-        showToast("Fill all fields!", "error"); return;
+
+    if (!name || !id || isNaN(cgpa)) {
+        showToast("Fill all fields!", "error");
+        return;
     }
-    students.push({name, id, cgpa});
+
+    // CGPA must be > 0.00 and <= 5.00
+    if (cgpa <= 0 || cgpa > 5) {
+        showToast("CGPA must be greater than 0.00 and not more than 5.00", "error");
+        return;
+    }
+
+    students.push({ name, id, cgpa });
     showToast("Student added!", "success");
     closeAddModal();
-    nameInput.value=""; 
-    idInput.value=""; 
-    cgpaInput.value="";
+
+    nameInput.value = "";
+    idInput.value = "";
+    cgpaInput.value = "";
 }
 
 /* SHOW STUDENTS */
@@ -230,3 +241,4 @@ function deleteAll(){
         confirm1.remove();
     }
 }
+
