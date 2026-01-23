@@ -10,28 +10,44 @@ function showToast(message, type="info") {
     setTimeout(()=>{ container.removeChild(toast); }, 3000);
 }
 
+/* PAGE ROUTING */
+function showPage(page){
+    document.getElementById("landingPage").style.display = page==="landing"?"block":"none";
+    document.getElementById("loginBox").style.display = page==="login"?"block":"none";
+    document.getElementById("mainApp").style.display = page==="app"?"block":"none";
+}
+
+// handle hash change
+window.addEventListener("hashchange", function(){
+    const page = location.hash.substring(1) || "landing";
+    showPage(page);
+});
+
+// on page load
+window.addEventListener("load", function(){
+    if(sessionStorage.getItem('loggedIn') === 'true'){
+        location.hash = "app"; // logged in, show app
+    } else {
+        const page = location.hash.substring(1) || "landing";
+        showPage(page);
+    }
+});
+
 /* LANDING → LOGIN */
 function goToLogin() {
-    document.getElementById("landingPage").style.display = "none";
-    document.getElementById("loginBox").style.display = "block";
+    location.hash = "login";
 }
 
 /* LOGIN */
 const loginPassInput = document.getElementById("loginPass");
 const loginBtn = document.getElementById("loginBtn");
 
-function showMainApp(){
-    document.getElementById("landingPage").style.display = "none";
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("mainApp").style.display = "block";
-}
-
 function handleLogin(){
     let pass = loginPassInput.value;
     if(pass === "9090"){
         showToast("Login successful!", "success");
-        sessionStorage.setItem('loggedIn','true'); // session storage set
-        showMainApp();
+        sessionStorage.setItem('loggedIn','true'); // set login
+        location.hash = "app"; // redirect to app
     } else {
         showToast("Wrong password!", "error");
     }
@@ -45,13 +61,6 @@ loginPassInput.addEventListener("keypress", function(e){
 
 // Click on Login button
 loginBtn.addEventListener("click", handleLogin);
-
-// Page reload check
-window.addEventListener('load', function(){
-    if(sessionStorage.getItem('loggedIn') === 'true'){
-        showMainApp();
-    }
-});
 
 /* MODALS */
 function openAddModal(){ document.getElementById("addModal").style.display = "flex"; }
