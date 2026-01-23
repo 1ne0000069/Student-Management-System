@@ -134,24 +134,6 @@ function sortStudents(){
     showToast("Students sorted by CGPA!", "success");
 }
 
-/* SAVE / LOAD */
-function saveToStorage(){
-    if(students.length===0){ showToast("No data to save!", "info"); return; }
-    localStorage.setItem("studentsData", JSON.stringify(students));
-    showToast("Data saved to browser!", "success");
-}
-
-function loadFromStorage(){
-    let data = localStorage.getItem("studentsData");
-    if(data){
-        students = JSON.parse(data);
-        showStudents();
-        showToast("Data loaded from browser!", "success");
-    } else {
-        showToast("No saved data found!", "info");
-    }
-}
-
 /* DELETE ALL — FIXED VERSION */
 function deleteAll(){
     if(students.length===0){ 
@@ -241,4 +223,5 @@ function deleteAll(){
         confirm1.remove();
     }
 }
+
 
